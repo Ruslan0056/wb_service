@@ -41,7 +41,8 @@ func main() {
 	fmt.Scanln(&target_revenue)
 	fmt.Print("Количество ключевых слов: ")
 	fmt.Scanln(&amt_keywords)
-	
+
+	//Ввод исх данных по ключевым словам в запросе
 	for i := 0; i < amt_keywords; i++ {
 		var a string
 		var b float64
@@ -52,12 +53,13 @@ func main() {
 		keywords = append(keywords, a)
 		proportion = append(proportion, b)
 	}
-	
+	// Вывод исходных данных
 	//fmt.Println(product_price, target_revenue, amt_keywords, keywords)
-	
+
+	// Расчет количетва выкупов
 	weekly_buyout := target_revenue / 4 * 100
 	buyout_amt := weekly_buyout / product_price //количество выкупов на неделю
-	var amt_product_by_day [][]int            //выделить память
+	var amt_product_by_day [][]int              //выделить память
 	// option := 0
 	// fmt.Println("Выберите сценарий:")
 	// fmt.Println("1 - Низходящая регрессия;")
@@ -65,21 +67,21 @@ func main() {
 	// fmt.Println("3 - Волнобразный сценарий;")
 	// fmt.Println("4 - Сценарий с пиками по краям.")
 	// fmt.Scanln(&option)
-	
+
+	// Вычиления выкупов по дням недели
 	sum_result := 0.0
-	
-	
+
 	for i := 1; i < 8; i++ {
 		result := 0.5238*math.Pow(float64(i), 2) - 4.1905*float64(i) + 13.857
 		sum_result += result * float64(buyout_amt) / 100
-		var amt_things_by_keyword []int 
+		var amt_things_by_keyword []int
 		for j := 0; j < amt_keywords; j++ {
-			amt_things_by_keyword = append(amt_things_by_keyword, int(result*float64(buyout_amt)/100 * proportion[j]))
+			amt_things_by_keyword = append(amt_things_by_keyword, int(result*float64(buyout_amt)/100*proportion[j]))
 		}
 		amt_product_by_day = append(amt_product_by_day, amt_things_by_keyword)
 	}
 	// switch option {
-		
+
 	// case 1:
 
 	// 	for i := 1; i < 8; i++ {
@@ -105,13 +107,12 @@ func main() {
 	// 	}
 	// case 4:
 	// }
-	
 
 	fmt.Println(amt_product_by_day)
 
 	fmt.Println(int(sum_result))
 
-
+	// Вычисления выкупов по размерам
 
 	//размерная сетка
 	// size_chart := make(map[string]float64)
